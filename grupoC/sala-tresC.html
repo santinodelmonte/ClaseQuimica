@@ -291,10 +291,6 @@
                                 <td>n = 2</td>
                                 <td><input type="number" class="config-input" id="ne-n2" min="0" max="8" required></td>
                             </tr>
-                            <tr>
-                                <td>n = 3</td>
-                                <td><input type="number" class="config-input" id="ne-n3" min="0" max="18" required></td>
-                            </tr>
                         </tbody>
                     </table>
                     
@@ -316,10 +312,7 @@
                                 <td>n = 2</td>
                                 <td><input type="number" class="config-input" id="b-n2" min="0" max="8" required></td>
                             </tr>
-                            <tr>
-                                <td>n = 3</td>
-                                <td><input type="number" class="config-input" id="b-n3" min="0" max="18" required></td>
-                            </tr>
+                            
                         </tbody>
                     </table>
                     
@@ -341,10 +334,7 @@
                                 <td>n = 2</td>
                                 <td><input type="number" class="config-input" id="n-n2" min="0" max="8" required></td>
                             </tr>
-                            <tr>
-                                <td>n = 3</td>
-                                <td><input type="number" class="config-input" id="n-n3" min="0" max="18" required></td>
-                            </tr>
+                            
                         </tbody>
                     </table>
                     
@@ -402,8 +392,7 @@
                 </form>
                 
                 <div id="feedback" class="feedback"></div>
-                
-                <button id="next-button" class="next-button" disabled>Ir a la Sala Final</button>
+
             </div>
         </section>
     </div>
@@ -415,15 +404,12 @@
             // Obtener valores de entrada
             const neN1 = parseInt(document.getElementById('ne-n1').value) || 0;
             const neN2 = parseInt(document.getElementById('ne-n2').value) || 0;
-            const neN3 = parseInt(document.getElementById('ne-n3').value) || 0;
             
             const bN1 = parseInt(document.getElementById('b-n1').value) || 0;
             const bN2 = parseInt(document.getElementById('b-n2').value) || 0;
-            const bN3 = parseInt(document.getElementById('b-n3').value) || 0;
             
             const nN1 = parseInt(document.getElementById('n-n1').value) || 0;
             const nN2 = parseInt(document.getElementById('n-n2').value) || 0;
-            const nN3 = parseInt(document.getElementById('n-n3').value) || 0;
             
             const pN1 = parseInt(document.getElementById('p-n1').value) || 0;
             const pN2 = parseInt(document.getElementById('p-n2').value) || 0;
@@ -435,25 +421,22 @@
             
             // Respuestas correctas según configuración electrónica básica
             const correctAnswers = {
-                ne: { n1: 2, n2: 8, n3: 0 },   // Neón: 1s² 2s² 2p⁶
-                b: { n1: 2, n2: 3, n3: 0 },     // Boro: 1s² 2s² 2p¹
-                n: { n1: 2, n2: 5, n3: 0 },     // Nitrógeno: 1s² 2s² 2p³
+                ne: { n1: 2, n2: 8},   // Neón: 1s² 2s² 2p⁶
+                b: { n1: 2, n2: 3},     // Boro: 1s² 2s² 2p¹
+                n: { n1: 2, n2: 5},     // Nitrógeno: 1s² 2s² 2p³
                 p: { n1: 2, n2: 8, n3: 5 },     // Fósforo: 1s² 2s² 2p⁶ 3s² 3p³
                 al: { n1: 2, n2: 8, n3: 3 }     // Aluminio: 1s² 2s² 2p⁶ 3s² 3p¹
             };
             
             // Verificar respuestas
             const isNeCorrect = neN1 === correctAnswers.ne.n1 && 
-                               neN2 === correctAnswers.ne.n2 && 
-                               neN3 === correctAnswers.ne.n3;
+                               neN2 === correctAnswers.ne.n2
             
             const isBCorrect = bN1 === correctAnswers.b.n1 && 
-                              bN2 === correctAnswers.b.n2 && 
-                              bN3 === correctAnswers.b.n3;
+                              bN2 === correctAnswers.b.n2 
             
             const isNCorrect = nN1 === correctAnswers.n.n1 && 
-                              nN2 === correctAnswers.n.n2 && 
-                              nN3 === correctAnswers.n.n3;
+                              nN2 === correctAnswers.n.n2 
             
             const isPCorrect = pN1 === correctAnswers.p.n1 && 
                               pN2 === correctAnswers.p.n2 && 
@@ -469,7 +452,7 @@
             const feedbackElement = document.getElementById('feedback');
             
             if (allCorrect) {
-                feedbackElement.textContent = '¡Excelente! Has configurado perfectamente todos los electrones en sus niveles de energía. ¡Eres un maestro de la configuración electrónica!';
+                feedbackElement.textContent = '¡Excelente! Has configurado perfectamente todos los electrones en sus niveles de energía. ¡Eres un maestro de la configuración electrónica! La tercera pista es: Mi número atómico es 8.';
                 feedbackElement.className = 'feedback correct';
                 document.getElementById('next-button').disabled = false;
             } else {
@@ -493,10 +476,7 @@
         });
         
         document.getElementById('next-button').addEventListener('click', function() {
-            alert('¡Felicidades! Has completado la Sala 3. En un sistema completo, esto te llevaría a la sala final.');
-            // Aquí iría la redirección a sala4.html en un sistema completo
         });
     </script>
 </body>
 </html>
-

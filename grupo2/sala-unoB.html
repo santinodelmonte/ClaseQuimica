@@ -287,7 +287,7 @@
             const feedbackElement = document.getElementById('feedback');
             
             if (allCorrect) {
-                feedbackElement.textContent = '¡Correcto! Lograste identificar todos los elementos. Tu conocimiento químico es excelente.';
+                feedbackElement.textContent = '¡Correcto! Lograste identificar todos los elementos. Tu conocimiento químico es excelente. La primera pista es: Soy un metal';
                 feedbackElement.className = 'feedback correct';
                 document.getElementById('next-button').disabled = false;
             } else {
@@ -306,10 +306,7 @@
         });
         
         document.getElementById('next-button').addEventListener('click', function() {
-            alert('¡Felicidades! Has completado la Sala 1. En un sistema completo, esto te llevaría a la siguiente sala.');
-            // Aquí iría la redirección a sala2.html en un sistema completo
         });
     </script>
 </body>
 </html>
-

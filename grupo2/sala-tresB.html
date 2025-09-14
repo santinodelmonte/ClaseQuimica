@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape Room Químico - Sala 3</title>
+    <style>
+        :root {
+            --primary: #3a7ebf;
+            --secondary: #bf3a3a;
+            --accent: #3abf7e;
+            --dark: #1a2b3c;
+            --light: #f0f8ff;
+            --correct: #4caf50;
+            --incorrect: #f44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2b3c 0%, #2c3e50 100%);
+            color: var(--light);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 2.2rem;
+        }
+        
+        h2 {
+            color: var(--accent);
+            margin: 20px 0 10px;
+            font-size: 1.5rem;
+        }
+        
+        h3 {
+            color: var(--primary);
+            margin: 15px 0 10px;
+            font-size: 1.2rem;
+        }
+        
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .element-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .element {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .element:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .element-symbol {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .element-info {
+            font-size: 1rem;
+            font-weight: normal;
+        }
+        
+        .challenge {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .config-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .config-table th,
+        .config-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .config-table th {
+            background-color: rgba(58, 126, 191, 0.3);
+            font-weight: bold;
+        }
+        
+        .config-input {
+            width: 60px;
+            padding: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .config-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        @media (max-width: 600px) {
+            .config-table {
+                font-size: 0.9rem;
+            }
+            
+            .config-input {
+                width: 50px;
+                padding: 6px;
+            }
+        }
+        
+        button {
+            padding: 12px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        
+        button:hover {
+            background-color: #2c6ca8;
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+        
+        .correct {
+            background-color: rgba(76, 175, 80, 0.2);
+            border: 2px solid var(--correct);
+            color: #a5d6a7;
+            display: block;
+        }
+        
+        .incorrect {
+            background-color: rgba(244, 67, 54, 0.2);
+            border: 2px solid var(--incorrect);
+            color: #ffab91;
+            display: block;
+        }
+        
+        .next-button {
+            display: none;
+            margin-top: 20px;
+            background-color: var(--accent);
+            width: 100%;
+        }
+        
+        .next-button:hover {
+            background-color: #2e9c6e;
+        }
+        
+        .progress {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 75%;
+            background-color: var(--accent);
+            border-radius: 5px;
+        }
+        
+        .hint {
+            background: rgba(58, 126, 191, 0.2);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Escape Room Químico</h1>
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div>
+        </header>
+        
+        <section>
+            <h2>Sala 3: Energía en Niveles</h2>
+            
+            <div class="element-list">
+                <div class="element">
+                    <div class="element-symbol">Ne</div>
+                    <div class="element-info">Neón<br>Z = 10</div>
+                </div>
+                <div class="element">
+                    <div class="element-symbol">B</div>
+                    <div class="element-info">Boro<br>Z = 5</div>
+                </div>
+                <div class="element">
+                    <div class="element-symbol">N</div>
+                    <div class="element-info">Nitrógeno<br>Z = 7</div>
+                </div>
+                <div class="element">
+                    <div class="element-symbol">P</div>
+                    <div class="element-info">Fósforo<br>Z = 15</div>
+                </div>
+                <div class="element">
+                    <div class="element-symbol">Al</div>
+                    <div class="element-info">Aluminio<br>Z = 13</div>
+                </div>
+            </div>
+            
+            <div class="challenge">
+                <p><strong>Consigna:</strong> "Un átomo está custodiando la salida. Solo te dejará pasar si configuras los electrones en los niveles de energía correctamente."</p>
+                
+            
+                
+                <form id="config-form">
+                    <!-- Neón -->
+                    <h3>Neón (Ne) - Z = 10</h3>
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>Nivel (n)</th>
+                                <th>Electrones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>n = 1</td>
+                                <td><input type="number" class="config-input" id="ne-n1" min="0" max="2" required></td>
+                            </tr>
+                            <tr>
+                                <td>n = 2</td>
+                                <td><input type="number" class="config-input" id="ne-n2" min="0" max="8" required></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- Boro -->
+                    <h3>Boro (B) - Z = 5</h3>
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>Nivel (n)</th>
+                                <th>Electrones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>n = 1</td>
+                                <td><input type="number" class="config-input" id="b-n1" min="0" max="2" required></td>
+                            </tr>
+                            <tr>
+                                <td>n = 2</td>
+                                <td><input type="number" class="config-input" id="b-n2" min="0" max="8" required></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                    
+                    <!-- Nitrógeno -->
+                    <h3>Nitrógeno (N) - Z = 7</h3>
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>Nivel (n)</th>
+                                <th>Electrones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>n = 1</td>
+                                <td><input type="number" class="config-input" id="n-n1" min="0" max="2" required></td>
+                            </tr>
+                            <tr>
+                                <td>n = 2</td>
+                                <td><input type="number" class="config-input" id="n-n2" min="0" max="8" required></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                    
+                    <!-- Fósforo -->
+                    <h3>Fósforo (P) - Z = 15</h3>
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>Nivel (n)</th>
+                                <th>Electrones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>n = 1</td>
+                                <td><input type="number" class="config-input" id="p-n1" min="0" max="2" required></td>
+                            </tr>
+                            <tr>
+                                <td>n = 2</td>
+                                <td><input type="number" class="config-input" id="p-n2" min="0" max="8" required></td>
+                            </tr>
+                            <tr>
+                                <td>n = 3</td>
+                                <td><input type="number" class="config-input" id="p-n3" min="0" max="18" required></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- Aluminio -->
+                    <h3>Aluminio (Al) - Z = 13</h3>
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>Nivel (n)</th>
+                                <th>Electrones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>n = 1</td>
+                                <td><input type="number" class="config-input" id="al-n1" min="0" max="2" required></td>
+                            </tr>
+                            <tr>
+                                <td>n = 2</td>
+                                <td><input type="number" class="config-input" id="al-n2" min="0" max="8" required></td>
+                            </tr>
+                            <tr>
+                                <td>n = 3</td>
+                                <td><input type="number" class="config-input" id="al-n3" min="0" max="18" required></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <button type="submit">Verificar Configuraciones</button>
+                </form>
+                
+                <div id="feedback" class="feedback"></div>
+
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.getElementById('config-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obtener valores de entrada
+            const neN1 = parseInt(document.getElementById('ne-n1').value) || 0;
+            const neN2 = parseInt(document.getElementById('ne-n2').value) || 0;
+            
+            const bN1 = parseInt(document.getElementById('b-n1').value) || 0;
+            const bN2 = parseInt(document.getElementById('b-n2').value) || 0;
+            
+            const nN1 = parseInt(document.getElementById('n-n1').value) || 0;
+            const nN2 = parseInt(document.getElementById('n-n2').value) || 0;
+            
+            const pN1 = parseInt(document.getElementById('p-n1').value) || 0;
+            const pN2 = parseInt(document.getElementById('p-n2').value) || 0;
+            const pN3 = parseInt(document.getElementById('p-n3').value) || 0;
+            
+            const alN1 = parseInt(document.getElementById('al-n1').value) || 0;
+            const alN2 = parseInt(document.getElementById('al-n2').value) || 0;
+            const alN3 = parseInt(document.getElementById('al-n3').value) || 0;
+            
+            // Respuestas correctas según configuración electrónica básica
+            const correctAnswers = {
+                ne: { n1: 2, n2: 8},   // Neón: 1s² 2s² 2p⁶
+                b: { n1: 2, n2: 3},     // Boro: 1s² 2s² 2p¹
+                n: { n1: 2, n2: 5},     // Nitrógeno: 1s² 2s² 2p³
+                p: { n1: 2, n2: 8, n3: 5 },     // Fósforo: 1s² 2s² 2p⁶ 3s² 3p³
+                al: { n1: 2, n2: 8, n3: 3 }     // Aluminio: 1s² 2s² 2p⁶ 3s² 3p¹
+            };
+            
+            // Verificar respuestas
+            const isNeCorrect = neN1 === correctAnswers.ne.n1 && 
+                               neN2 === correctAnswers.ne.n2
+            
+            const isBCorrect = bN1 === correctAnswers.b.n1 && 
+                              bN2 === correctAnswers.b.n2 
+            
+            const isNCorrect = nN1 === correctAnswers.n.n1 && 
+                              nN2 === correctAnswers.n.n2 
+            
+            const isPCorrect = pN1 === correctAnswers.p.n1 && 
+                              pN2 === correctAnswers.p.n2 && 
+                              pN3 === correctAnswers.p.n3;
+            
+            const isAlCorrect = alN1 === correctAnswers.al.n1 && 
+                               alN2 === correctAnswers.al.n2 && 
+                               alN3 === correctAnswers.al.n3;
+            
+            const allCorrect = isNeCorrect && isBCorrect && isNCorrect && isPCorrect && isAlCorrect;
+            
+            // Mostrar retroalimentación
+            const feedbackElement = document.getElementById('feedback');
+            
+            if (allCorrect) {
+                feedbackElement.textContent = '¡Excelente! Has configurado perfectamente todos los electrones en sus niveles de energía. ¡Eres un maestro de la configuración electrónica! La tercera pista es: Mi número atómico es 28.';
+                feedbackElement.className = 'feedback correct';
+                document.getElementById('next-button').disabled = false;
+            } else {
+                let incorrectElements = [];
+                if (!isNeCorrect) incorrectElements.push('Neón (Ne)');
+                if (!isBCorrect) incorrectElements.push('Boro (B)');
+                if (!isNCorrect) incorrectElements.push('Nitrógeno (N)');
+                if (!isPCorrect) incorrectElements.push('Fósforo (P)');
+                if (!isAlCorrect) incorrectElements.push('Aluminio (Al)');
+                
+                feedbackElement.innerHTML = `Algunas configuraciones son incorrectas. Revisa los elementos: ${incorrectElements.join(', ')}.<br>
+                Recuerda seguir la regla de distribución electrónica: 
+                <br>• Primero llena el nivel 1 (máximo 2 electrones)
+                <br>• Luego el nivel 2 (máximo 8 electrones)
+                <br>• Después el nivel 3 (máximo 18 electrones)
+                <br>• Y así sucesivamente...`;
+                feedbackElement.className = 'feedback incorrect';
+            }
+            
+            feedbackElement.style.display = 'block';
+        });
+        
+        document.getElementById('next-button').addEventListener('click', function() {
+        });
+    </script>
+</body>
+</html>
