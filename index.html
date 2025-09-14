@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escape Room Químico - Inicio</title>
+  <style>
+    :root {
+      --primary: #3a7ebf;
+      --secondary: #bf3a3a;
+      --accent: #3abf7e;
+      --dark: #1a2b3c;
+      --light: #f0f8ff;
+      --correct: #4caf50;
+      --incorrect: #f44336;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1a2b3c 0%, #2c3e50 100%);
+      color: var(--light);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: var(--accent);
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+
+    .timer {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--secondary);
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    label {
+      font-size: 1rem;
+      text-align: left;
+    }
+
+    input {
+      padding: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1.2rem;
+      text-align: center;
+      letter-spacing: 3px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    button {
+      padding: 12px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #2c6ca8;
+    }
+
+    .feedback {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      display: none;
+    }
+
+    .correct {
+      background-color: rgba(76, 175, 80, 0.2);
+      border: 2px solid var(--correct);
+      color: #a5d6a7;
+      display: block;
+    }
+
+    .incorrect {
+      background-color: rgba(244, 67, 54, 0.2);
+      border: 2px solid var(--incorrect);
+      color: #ffab91;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Escape Room Químico</h1>
+    <div class="timer" id="timer">30:00</div>
+
+    <form id="login-form">
+      <label for="clave">Introduce la clave secreta</label>
+      <p>Sos un...</p>
+      <input type="text" id="clave" placeholder="__-__-_" required maxlength="7">
+      <button type="submit">Ingresar</button>
+    </form>
+
+    <div id="feedback" class="feedback"></div>
+  </div>
+
+  <script>
+    // Temporizador de 30 minutos
+    let tiempo = 30 * 60; // en segundos
+    const timerElement = document.getElementById('timer');
+
+    function actualizarTimer() {
+      const minutos = Math.floor(tiempo / 60);
+      const segundos = tiempo % 60;
+      timerElement.textContent = 
+        `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+      if (tiempo > 0) {
+        tiempo--;
+      } else {
+        clearInterval(countdown);
+        timerElement.textContent = "¡Tiempo agotado!";
+      }
+    }
+
+    actualizarTimer();
+    const countdown = setInterval(actualizarTimer, 1000);
+
+    // Validación de la clave secreta
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const clave = document.getElementById('clave').value.trim();
+      const feedback = document.getElementById('feedback');
+
+      if (clave === 'GeNiO') {
+        feedback.textContent = '¡Clave correcta! Redirigiendo...';
+        feedback.className = 'feedback correct';
+          window.location.href = 'sala-cuatro.html';
+      } else {
+        feedback.textContent = 'Clave incorrecta. Intenta de nuevo.';
+        feedback.className = 'feedback incorrect';
+      }
+
+      feedback.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
