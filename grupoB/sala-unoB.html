@@ -249,7 +249,7 @@
                 
                 <div id="feedback" class="feedback"></div>
                 
-                <button id="next-button" class="next-button" disabled>Ir a la Sala 2</button>
+                <button id="next-button" class="next-button">Ir a la Sala 2</button>
             </div>
         </section>
     </div>
@@ -258,14 +258,12 @@
         document.getElementById('element-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Obtener valores de entrada y normalizar (minúsculas, sin espacios)
             const naInput = document.getElementById('na-input').value.trim().toLowerCase();
             const kInput = document.getElementById('k-input').value.trim().toLowerCase();
             const fInput = document.getElementById('f-input').value.trim().toLowerCase();
             const heInput = document.getElementById('he-input').value.trim().toLowerCase();
             const mgInput = document.getElementById('mg-input').value.trim().toLowerCase();
             
-            // Respuestas correctas
             const correctAnswers = {
                 na: ['sodio'],
                 k: ['potasio'],
@@ -274,7 +272,6 @@
                 mg: ['magnesio']
             };
             
-            // Verificar respuestas
             const isNaCorrect = correctAnswers.na.includes(naInput);
             const isKCorrect = correctAnswers.k.includes(kInput);
             const isFCorrect = correctAnswers.f.includes(fInput);
@@ -283,13 +280,13 @@
             
             const allCorrect = isNaCorrect && isKCorrect && isFCorrect && isHeCorrect && isMgCorrect;
             
-            // Mostrar retroalimentación
             const feedbackElement = document.getElementById('feedback');
+            const nextButton = document.getElementById('next-button');
             
             if (allCorrect) {
-                feedbackElement.textContent = '¡Correcto! Lograste identificar todos los elementos. Tu conocimiento químico es excelente. La primera pista es: Soy un metal';
+                feedbackElement.textContent = '¡Correcto! Lograste identificar todos los elementos. Tu conocimiento químico es excelente. La primera pista es: Soy un metal.';
                 feedbackElement.className = 'feedback correct';
-                document.getElementById('next-button').disabled = false;
+                nextButton.style.display = 'block';
             } else {
                 let incorrectElements = [];
                 if (!isNaCorrect) incorrectElements.push('Na');
@@ -300,12 +297,14 @@
                 
                 feedbackElement.textContent = `Algunas respuestas son incorrectas. Revisa los elementos: ${incorrectElements.join(', ')}.`;
                 feedbackElement.className = 'feedback incorrect';
+                nextButton.style.display = 'none';
             }
             
             feedbackElement.style.display = 'block';
         });
         
         document.getElementById('next-button').addEventListener('click', function() {
+            window.location.href = "sala-dosB.html";
         });
     </script>
 </body>

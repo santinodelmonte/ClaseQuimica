@@ -356,7 +356,7 @@
                 
                 <div id="feedback" class="feedback"></div>
                 
-                <button id="next-button" class="next-button" disabled>Ir a la Sala 3</button>
+                <button id="next-button" class="next-button">Ir a la Sala 3</button>
             </div>
         </section>
     </div>
@@ -387,13 +387,12 @@
             const arNeutrones = parseInt(document.getElementById('ar-neutrones').value) || 0;
             
             // Respuestas correctas
-            // Para átomos neutros: protones = electrones = Z, neutrones = A - Z
             const correctAnswers = {
-                o: { protones: 8, electrones: 8, neutrones: 8 }, // 16-8=8
-                na: { protones: 11, electrones: 11, neutrones: 12 }, // 23-11=12
-                c: { protones: 6, electrones: 6, neutrones: 6 }, // 12-6=6
-                be: { protones: 4, electrones: 4, neutrones: 5 }, // 9-4=5
-                ar: { protones: 18, electrones: 18, neutrones: 22 } // 40-18=22
+                o: { protones: 8, electrones: 8, neutrones: 8 },
+                na: { protones: 11, electrones: 11, neutrones: 12 },
+                c: { protones: 6, electrones: 6, neutrones: 6 },
+                be: { protones: 4, electrones: 4, neutrones: 5 },
+                ar: { protones: 18, electrones: 18, neutrones: 22 }
             };
             
             // Verificar respuestas
@@ -421,11 +420,12 @@
             
             // Mostrar retroalimentación
             const feedbackElement = document.getElementById('feedback');
+            const nextButton = document.getElementById('next-button');
             
             if (allCorrect) {
-                feedbackElement.textContent = '¡Correcto! Has calculado perfectamente todas las partículas subatómicas. ¡Eres un verdadero detective del núcleo! La segunda pista es: Me encuentro cerca de la plata y el cobre.';
+                feedbackElement.textContent = '¡Correcto! Has calculado perfectamente todas las partículas subatómicas. ¡Eres un verdadero detective del núcleo! La segunda pista es: Me encuentro en entre la plata y el cobre.';
                 feedbackElement.className = 'feedback correct';
-                document.getElementById('next-button').disabled = false;
+                nextButton.style.display = 'block';
             } else {
                 let incorrectElements = [];
                 if (!isOCorrect) incorrectElements.push('Oxígeno (O)');
@@ -439,12 +439,14 @@
                 el número de electrones es igual al número de protones, 
                 y el número de neutrones es igual al número másico (A) menos el número atómico (Z).`;
                 feedbackElement.className = 'feedback incorrect';
+                nextButton.style.display = 'none';
             }
             
             feedbackElement.style.display = 'block';
         });
         
         document.getElementById('next-button').addEventListener('click', function() {
+            window.location.href = "sala-tresB.html";
         });
     </script>
 </body>
