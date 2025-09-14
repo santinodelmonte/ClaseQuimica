@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escape Room Químico - Final</title>
+  <style>
+    :root {
+      --primary: #3a7ebf;
+      --secondary: #bf3a3a;
+      --accent: #3abf7e;
+      --dark: #1a2b3c;
+      --light: #f0f8ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1a2b3c 0%, #2c3e50 100%);
+      color: var(--light);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: var(--accent);
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .key-img {
+      width: 150px;
+      height: auto;
+      filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.6));
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>¡Felicitaciones!</h1>
+    <p>Lograste recuperar la <strong>Tabla Periódica</strong>.<br>
+       Ahora sos un <strong>Guardián de los Elementos</strong>.</p>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Gold_key_icon.svg" 
+         alt="Llave dorada" class="key-img">
+  </div>
+</body>
+</html>
